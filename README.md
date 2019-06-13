@@ -10,8 +10,8 @@ A simple web scraping project that opens linked-in account loads gets profile UR
 
 *Requirments: 
 
-  Python 3.7
-  BeautifulSoup - pip install bs4
-  selenium - pip install selenium
-  time,pickle, os library
+  Python 3.7<br>
+  BeautifulSoup - pip install bs4 <br>
+  selenium - pip install selenium<br>
+  time,pickle, os library<br>
   chrome driver : chromedriver
