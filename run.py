@@ -4,7 +4,7 @@ import time
 import pickle
 import os
 
-driver = webdriver.Chrome('D:\chromedriver_win32\chromedriver.exe')
+driver = webdriver.Chrome('D:\py\chromedriver_win32\chromedriver.exe')
 link_list = []
 link_list_v = []
 #load profile links from file links.txt
@@ -23,10 +23,10 @@ def login_and_search():
 	driver.maximize_window()
 	#enter username
 	email = driver.find_element_by_xpath('//*[@id="username"]')
-	email.send_keys('username@email.com') # change it to your username
+	email.send_keys('YOUREMAIL') # change it to your username
 	#enter password
 	password = driver.find_element_by_xpath('//*[@id="password"]')
-	password.send_keys('Y0urP@55w0rd') #change it to your password
+	password.send_keys('YOURPASSWORD') #change it to your password
 	#click login
 	login = driver.find_element_by_xpath('//*[@id="app__container"]/main/div/form/div[3]/button')
 	login.click()
@@ -44,8 +44,8 @@ def get_page_links(linkz):
 	print ('OPEN: '+driver.current_url)
 	link_list_v.append(linkz)
 
-	ul = soup.find('ul', class_='mt4')
-
+	
+	ul = soup.find('ul', class_='results-list')
 	if ul:
 		for a in ul.find_all('a')[0:(len(ul.find_all('a'))-2)]:
 			new_link='https://www.linkedin.com' + a['href']
@@ -54,6 +54,17 @@ def get_page_links(linkz):
 				print (new_link)	
 	else:
 		print('Not List found')
+
+	ul = soup.find('ul', class_='mt4')
+	if ul:
+		for a in ul.find_all('a')[0:(len(ul.find_all('a'))-2)]:
+			new_link='https://www.linkedin.com' + a['href']
+			if new_link not in link_list and new_link not in link_list_v:
+				link_list.append(new_link)
+				print (new_link)	
+	else:
+		print('Not List found')
+	
 	with open('links.txt', 'wb') as fp:
 		pickle.dump(link_list, fp)
 	with open('links_v.txt', 'wb') as fp:
@@ -75,7 +86,7 @@ if link_list:
 			time.sleep(5)
 else:
 	get_page_links('https://www.linkedin.com/search/results/people/?keyword=python')
-driver.quit()
+#driver.quit()
 
 ####################################################################################
 
